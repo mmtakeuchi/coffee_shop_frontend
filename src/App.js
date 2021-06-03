@@ -1,9 +1,18 @@
 import "./App.css";
+import { Switch } from "react-router-dom";
+import { AuthRoute, ProtectedRoute } from "./utils/routeUtil";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import Login from "./components/Login";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Coffee Shop</header>
+      <NavBar />
+      <Switch>
+        <AuthRoute exact path="/" component={Home} />
+        <AuthRoute exact path="/login" component={Login} />
+      </Switch>
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import React from "react";
+// import ShoppingCart from "./shopping-cart.svg";
+import ShoppingCart from "../icons/cart3.svg";
 import { Navbar, Nav, Button } from "react-bootstrap";
 
 class NavBar extends React.Component {
@@ -24,7 +26,6 @@ class NavBar extends React.Component {
               <Nav.Link href="/products">Shop</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="/cart">Cart</Nav.Link>
               {this.props.loggedIn ? (
                 <Button onClick={this.logoutUser}>Logout</Button>
               ) : (
@@ -33,6 +34,13 @@ class NavBar extends React.Component {
                   <Nav.Link href="/login">Login</Nav.Link>
                 </React.Fragment>
               )}
+              <Nav.Link href="/cart">
+                {/* <img
+                  src={process.env.PUBLIC_URL + "/images/shopping-cart.svg"}
+                  alt="shopping cart icon"
+                /> */}
+                <img src={ShoppingCart} alt="shopping cart" />
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

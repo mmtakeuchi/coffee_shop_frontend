@@ -8,6 +8,7 @@ import {
 const initialState = {
   isAuthenticated: false,
   user: {},
+  errors: [],
 };
 
 export default function (state = initialState, action) {
@@ -29,7 +30,7 @@ export default function (state = initialState, action) {
         isSignedIn: true,
       };
     case RECEIVE_SESSION_ERRORS:
-      return action.errors;
+      return { errors: [action.errors] };
     default:
       return state;
   }

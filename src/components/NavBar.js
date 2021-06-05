@@ -1,5 +1,6 @@
 import React from "react";
-// import ShoppingCart from "./shopping-cart.svg";
+import { connect } from "react-redux";
+import { logout } from "../actions/sessionActions";
 import ShoppingCart from "../icons/cart3.svg";
 import { Navbar, Nav, Button } from "react-bootstrap";
 
@@ -15,6 +16,7 @@ class NavBar extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <>
         <Navbar bg="white" variant="light" expand="md">
@@ -26,8 +28,8 @@ class NavBar extends React.Component {
               <Nav.Link href="/products">Shop</Nav.Link>
             </Nav>
             <Nav>
-              {this.props.loggedIn ? (
-                <Button onClick={this.logoutUser}>Logout</Button>
+              {this.props.user.isAuthenticated ? (
+                <Nav.Link onClick={this.logoutUser}>Logout</Nav.Link>
               ) : (
                 <React.Fragment>
                   <Nav.Link href="/register">Register</Nav.Link>
@@ -49,4 +51,12 @@ class NavBar extends React.Component {
   }
 }
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+  user: state.session,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

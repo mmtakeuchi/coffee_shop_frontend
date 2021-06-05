@@ -33,6 +33,7 @@ export const signup = (user) => (dispatch) =>
 export const login = (user) => (dispatch) =>
   APIUtil.login(user)
     .then((res) => {
+      console.log(user);
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       APIUtil.setAuthToken(token);

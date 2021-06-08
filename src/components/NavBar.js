@@ -19,7 +19,7 @@ class NavBar extends React.Component {
     console.log(this.props);
     return (
       <>
-        <Navbar bg="white" variant="light" expand="md">
+        <Navbar bg="light" expand="md">
           <Navbar.Brand href="/">Coffee Shop</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -28,7 +28,7 @@ class NavBar extends React.Component {
               <Nav.Link href="/products">Shop</Nav.Link>
             </Nav>
             <Nav>
-              {this.props.user.isAuthenticated ? (
+              {this.props.loggedIn ? (
                 <Nav.Link onClick={this.logoutUser}>Logout</Nav.Link>
               ) : (
                 <React.Fragment>
@@ -52,7 +52,7 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.session,
+  loggedIn: state.session.isAuthenticated,
 });
 
 const mapDispatchToProps = (dispatch) => ({

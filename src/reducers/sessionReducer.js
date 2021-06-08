@@ -27,7 +27,8 @@ export default function (state = initialState, action) {
     case RECEIVE_USER_SIGN_IN:
       return {
         ...state,
-        isSignedIn: true,
+        isAuthenticated: !!action.newUser,
+        user: action.newUser,
       };
     case RECEIVE_SESSION_ERRORS:
       return { errors: [action.errors] };

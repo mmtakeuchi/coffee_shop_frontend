@@ -26,9 +26,12 @@ class NavBar extends React.Component {
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/products">Shop</Nav.Link>
+              {this.props.current.user.isAdmin && (
+                <Nav.Link href="/products/new">New Product</Nav.Link>
+              )}
             </Nav>
             <Nav>
-              {this.props.loggedIn ? (
+              {this.props.current.isAuthenticated ? (
                 <Nav.Link onClick={this.logoutUser}>Logout</Nav.Link>
               ) : (
                 <React.Fragment>
@@ -52,7 +55,7 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.session.isAuthenticated,
+  current: state.session,
 });
 
 const mapDispatchToProps = (dispatch) => ({

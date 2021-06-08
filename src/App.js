@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Login from "./components/session/Login";
 import Register from "./components/session/Register";
 import Products from "./components/products/Products";
+import NewProduct from "./components/products/NewProduct";
 import ProductPage from "./components/products/ProductPage";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
@@ -22,7 +23,8 @@ function App() {
           <AuthRoute exact path="/register" component={Register} />
 
           <Route exact path="/products" component={Products} />
-          <Route exact path="/products/:id" component={ProductPage} />
+          <ProtectedRoute path="/products/new" component={NewProduct} />
+          <Route path="/products/:id" component={ProductPage} />
           <ProtectedRoute exact path="/cart" component={Cart} />
         </Switch>
         <Footer />

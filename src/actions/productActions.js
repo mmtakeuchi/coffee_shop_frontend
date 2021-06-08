@@ -17,7 +17,7 @@ export const getItem = (product) => ({
   product,
 });
 
-export const addItem = (newProduct) => ({
+export const createProduct = (newProduct) => ({
   type: ADD_PRODUCT,
   newProduct,
 });
@@ -49,15 +49,13 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
-export const addProduct = (product) => (dispatch) => {
+export const addProduct = (newProduct) => (dispatch) => {
   axios
-    .post("/api/products", product)
-    .then((res) =>
-      dispatch({
-        type: ADD_PRODUCT,
-        payload: res.data,
-      })
-    )
+    .post("/api/products", newProduct)
+    .then((res) => {
+      console.log(res);
+      dispatch(createProduct(res.data));
+    })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );

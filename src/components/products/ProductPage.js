@@ -11,7 +11,7 @@ const ProductPage = (props) => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.products);
   const user = useSelector((state) => state.session);
-  console.log(product, user);
+  console.log(product, user.user.id);
 
   useEffect(() => dispatch(getProduct(productId)), [dispatch]);
 
@@ -25,8 +25,10 @@ const ProductPage = (props) => {
     setCount(count + 1);
   };
 
-  const addToCart = () => {
-    console.log(productId);
+  const addItemToCart = () => {
+    const userId = user.user.id;
+    console.log(userId, productId, count);
+    // dispatch(addToCart(userId, productId));
   };
 
   return (
@@ -53,7 +55,7 @@ const ProductPage = (props) => {
                     +
                   </Button>
                 </div>
-                <Button variant="success" onClick={addToCart}>
+                <Button variant="success" onClick={addItemToCart}>
                   Add to Cart
                 </Button>
               </div>

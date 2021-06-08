@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../actions/productActions";
+import { addToCart } from "../../actions/cartActions";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
 const ProductPage = (props) => {

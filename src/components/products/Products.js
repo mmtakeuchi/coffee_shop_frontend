@@ -10,7 +10,6 @@ class Products extends React.Component {
   }
 
   renderProducts = () => {
-    console.log(this.props.products.products.map((product) => product.title));
     return this.props.products.products.map((product, i) => {
       return (
         <div key={i}>

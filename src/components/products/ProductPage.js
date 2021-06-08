@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getProduct } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
+import UpdateProduct from "./UpdateProduct";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
 const ProductPage = (props) => {
   console.log(props);
   const productId = props.match.params.id;
   const [count, setCount] = useState(1);
+  const history = useHistory();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.products);
-  const user = useSelector((state) => state.session);
-  console.log(product, user.user.id);
+  const user = useSelector((state) => state.session.user);
+  console.log(product, user);
 
   useEffect(() => dispatch(getProduct(productId)), [dispatch]);
 
@@ -26,7 +29,7 @@ const ProductPage = (props) => {
   };
 
   const addItemToCart = () => {
-    const userId = user.user.id;
+    const userId = user.id;
     console.log(userId, productId, count);
     // dispatch(addToCart(userId, productId));
   };
@@ -34,6 +37,11 @@ const ProductPage = (props) => {
   return (
     <div>
       <h2>Product Page</h2>
+      {user.isAdmin && (
+        <Button onClick={() => history.push(`/products/${productId}/update`)}>
+          Update Product
+        </Button>
+      )}
       {product && (
         <Container>
           <Row>

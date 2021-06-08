@@ -26,6 +26,22 @@ export default function (state = initialState, action) {
         ...state,
         products: action.product,
       };
+    case ADD_PRODUCT:
+      console.log(action.newProduct);
+      return {
+        ...state,
+        products: [...state.products, action.newProduct],
+      };
+    case UPDATE_PRODUCT:
+      console.log(action.updatedProduct);
+      console.log(state);
+      let items = [...state.products].filter(
+        (product) => product.id !== action.updatedProduct._id
+      );
+      return {
+        ...state,
+        products: items,
+      };
     case RECEIVE_PRODUCT_ERRORS:
       return { errors: [action.errors] };
     default:

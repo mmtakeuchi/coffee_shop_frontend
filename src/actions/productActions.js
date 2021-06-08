@@ -22,9 +22,9 @@ export const createProduct = (newProduct) => ({
   newProduct,
 });
 
-export const updateItem = (product) => ({
+export const updateItem = (updatedProduct) => ({
   type: UPDATE_PRODUCT,
-  product,
+  updatedProduct,
 });
 
 export const deleteItem = (product) => ({
@@ -54,7 +54,7 @@ export const addProduct = (newProduct) => (dispatch) => {
     .post("/api/products", newProduct)
     .then((res) => {
       console.log(res);
-      dispatch(createProduct(res.data));
+      //   dispatch(createProduct(res.data));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
@@ -71,4 +71,14 @@ export const getProduct = (productId) => (dispatch) => {
     .catch((err) =>
       dispatch(receiveErrors(err.response.data, err.response.status))
     );
+};
+
+export const updateProduct = (productId, updatedProduct) => (dispatch) => {
+  axios
+    .put(`/api/products/${productId}`, updatedProduct)
+    .then((res) => {
+      console.log(res);
+      dispatch(updateItem(res.data));
+    })
+    .catch((err) => dispatch(returnErrors(err.response.data)));
 };

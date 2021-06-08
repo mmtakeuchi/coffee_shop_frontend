@@ -1,11 +1,10 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <Navbar fixed="bottom" className="justify-content-center">
-      <span>&copy; Coffee Shop 2020</span>
-    </Navbar>
+    <footer className="footer mt-auto py-3" style={{ flexShrink: "0" }}>
+      <div className="container">&copy; Coffee Shop 2020</div>
+    </footer>
   );
 };
 

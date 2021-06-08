@@ -26,7 +26,7 @@ class NavBar extends React.Component {
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/products">Shop</Nav.Link>
-              {this.props.current.user.isAdmin && (
+              {this.props.current.user && this.props.current.user.isAdmin && (
                 <Nav.Link href="/products/new">New Product</Nav.Link>
               )}
             </Nav>

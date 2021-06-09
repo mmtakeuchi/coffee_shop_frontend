@@ -10,17 +10,19 @@ class Products extends React.Component {
   }
 
   renderProducts = () => {
-    return this.props.products.products.map((product, i) => {
-      return (
-        <div key={i}>
-          <Product product={product} />
-        </div>
-      );
-    });
+    return (
+      this.props.products &&
+      this.props.products.map((product, i) => {
+        return (
+          <div key={i}>
+            <Product product={product} />
+          </div>
+        );
+      })
+    );
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <h2>Products Page</h2>
@@ -31,7 +33,7 @@ class Products extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  products: state.products,
+  products: state.products.products,
 });
 
 const mapDispatchToProps = (dispatch) => ({

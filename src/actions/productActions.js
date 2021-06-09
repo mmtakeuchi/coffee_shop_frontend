@@ -54,7 +54,7 @@ export const addProduct = (newProduct) => (dispatch) => {
     .post("/api/products", newProduct)
     .then((res) => {
       console.log(res);
-      //   dispatch(createProduct(res.data));
+      dispatch(createProduct(res.data));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
@@ -77,8 +77,8 @@ export const updateProduct = (productId, updatedProduct) => (dispatch) => {
   axios
     .put(`/api/products/${productId}`, updatedProduct)
     .then((res) => {
-      console.log(res);
-      dispatch(updateItem(res.data));
+      console.log(res.data);
+      dispatch(updateItem(Promise.all([productId, res.data])));
     })
     .catch((err) => dispatch(returnErrors(err.response.data)));
 };

@@ -25,12 +25,12 @@ const UpdateProduct = (props) => {
       .required("Title is required"),
     flavor: Yup.string().required("Flavor is required"),
     description: Yup.string().required("Description is required"),
-    images: Yup.string(),
     category: Yup.string().required("Category is required"),
     price: Yup.number().required("Price is required"),
     stock: Yup.number()
       .positive("Stock must be a positive number.")
       .required("Stock is required"),
+    images: Yup.mixed(),
   });
   const formOptions = {
     resolver: yupResolver(validationSchema),
@@ -48,7 +48,7 @@ const UpdateProduct = (props) => {
   setValue("category", product ? product.category : "");
   setValue("price", product ? product.price : "");
   setValue("stock", product ? product.stock : "");
-  setValue("image", product ? product.image : "");
+  setValue("images", product ? product.image : "");
 
   function onSubmit(values) {
     console.log(values);

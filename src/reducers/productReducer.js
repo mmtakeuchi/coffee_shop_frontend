@@ -27,6 +27,7 @@ export default function (state = initialState, action) {
         products: action.product,
       };
     case ADD_PRODUCT:
+      console.log(state);
       console.log(action.newProduct);
       return {
         ...state,

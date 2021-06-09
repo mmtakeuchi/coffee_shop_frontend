@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
-  console.log(product._id);
   return (
     <div>
       <Link to={`/products/${product._id}`}>

@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 import { getProduct } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
 import UpdateProduct from "./UpdateProduct";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Image } from "cloudinary-react";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import config from "../../config/config";
 
 const ProductPage = (props) => {
   console.log(props);
@@ -46,7 +48,15 @@ const ProductPage = (props) => {
         <Container>
           <Row>
             <Col>
-              <Image src={product.image} rounded />
+              {product.images && (
+                <Image
+                  key={product._id}
+                  cloudName={config.cloudName}
+                  publicId={product.images}
+                  width="300"
+                  crop="scale"
+                />
+              )}
             </Col>
             <Col>
               <div>

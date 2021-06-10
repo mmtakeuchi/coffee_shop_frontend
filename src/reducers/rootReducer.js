@@ -6,7 +6,7 @@ import imageReducer from "./imageReducer";
 const rootReducer = combineReducers({
   session: sessionReducer,
   products: productReducer,
-  images: imageReducer,
+  image: imageReducer,
 });
 
 export default rootReducer;

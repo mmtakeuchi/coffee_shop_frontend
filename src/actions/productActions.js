@@ -50,11 +50,12 @@ export const getProducts = () => (dispatch) => {
 };
 
 export const addProduct = (newProduct) => (dispatch) => {
+  console.log(newProduct);
   axios
     .post("/api/products", newProduct)
     .then((res) => {
       console.log(res);
-      dispatch(createProduct(res.data));
+      // dispatch(createProduct(res.data));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

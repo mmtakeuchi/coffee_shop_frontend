@@ -3,48 +3,37 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions/productActions";
-import { uploadImage, uploadPhoto } from "../../actions/imageActions";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { CloudinaryContext } from "cloudinary-react";
-import config from "../../config/config";
+import { uploadImage } from "../../actions/imageActions";
 import { Form, Col, Button } from "react-bootstrap";
 
 const NewProduct = (props) => {
   console.log(props);
   const dispatch = useDispatch();
-  const [photo, setPhoto] = useState("");
+  const [values, setValues] = useState({
+    title: "",
+    flavor: "",
+    description: "",
+    category: "",
+    price: "",
+    stock: "",
+    image: "",
+  });
+  const [photograph, setPhoto] = useState("photo");
   const [selectedFile, setSelectedFile] = useState("");
   const [preview, setPreview] = useState("");
   const user = useSelector((state) => state.session.user);
   const productErrors = useSelector((state) => state.products.errors);
-  console.log(photo);
+  const photo = useSelector((state) => state.image);
 
-  // const validationSchema = Yup.object().shape({
-  //   title: Yup.string()
-  //     .max(100, "Title must be less than 100 characters")
-  //     .required("Title is required"),
-  //   flavor: Yup.string().required("Flavor is required"),
-  //   description: Yup.string().required("Description is required"),
-  //   category: Yup.string().required("Category is required"),
-  //   price: Yup.number()
-  //     .positive("Stock must be a positive number.")
-  //     .required("Price is required"),
-  //   stock: Yup.number()
-  //     .positive("Stock must be a positive number.")
-  //     .required("Stock is required"),
-  //   images: Yup.mixed(),
-  // });
-  // const formOptions = { resolver: yupResolver(validationSchema) };
-
-  // // get functions to build form with useForm() hook
-  // const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  // const { errors } = formState;
+  const handleInputChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     previewFile(file);
+    if (!preview) return;
+    uploadPhoto(preview);
   };
 
   const previewFile = (file) => {
@@ -56,12 +45,10 @@ const NewProduct = (props) => {
   };
 
   const handleSubmit = (e) => {
-    console.log("submit");
-
     e.preventDefault();
-    if (!preview) return;
-    uploadPhoto(preview);
-    // dispatch(addProduct(values));
+    console.log(values);
+    console.log(preview);
+    dispatch(addProduct(values));
   };
 
   const uploadPhoto = async (EncodedImage) => {
@@ -72,52 +59,107 @@ const NewProduct = (props) => {
         url: "/api/image",
         data: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
-      }).then((res) => {
-        console.log(res);
-        setPhoto(res.data.image);
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
     } catch (err) {
       console.log(err);
     }
+    const photo = dispatch(uploadImage(data));
+
+    console.log(photo);
   };
 
   return (
     <React.Fragment>
-      <Form onSubmit={handleSubmit}>
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-        </Form.Row>
-
-        <Form.Group controlId="formGridAddress1">
-          <Form.Label>Address</Form.Label>
-          <Form.Control placeholder="1234 Main St" />
+      <Form onSubmit={handleSubmit} noValidate>
+        <Form.Group controlId="formGridTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            name="title"
+            type="text"
+            placeholder="Enter Product Name"
+            value={values.title}
+            onChange={handleInputChange}
+          />
         </Form.Group>
 
-        <Form.Group controlId="formGridAddress2">
-          <Form.Label>Address 2</Form.Label>
-          <Form.Control placeholder="Apartment, studio, or floor" />
+        <Form.Group controlId="formGridFlavor">
+          <Form.Label>Flavor</Form.Label>
+          <Form.Control
+            name="flavor"
+            type="text"
+            placeholder="Enter Product Flavor"
+            value={values.flavor}
+            onChange={handleInputChange}
+          />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group controlId="formGridDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            name="description"
+            type="text"
+            placeholder="Enter Product Description"
+            value={values.description}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formGridACategory">
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            name="category"
+            type="text"
+            placeholder="Enter Product Category"
+            value={values.category}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formGridPrice">
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            name="price"
+            type="text"
+            placeholder="Enter Product Price"
+            value={values.price}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formGridAStock">
+          <Form.Label>Stock</Form.Label>
+          <Form.Control
+            name="stock"
+            type="text"
+            placeholder="Enter Product Stock"
+            value={values.stock}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.File id="formcheck-api-regular">
+          <Form.File.Label>Image</Form.File.Label>
+          <Form.File.Input
+            id="exampleFormControlFile1"
+            name="image"
+            value={values.image}
+            onChange={handleImageUpload}
+            className="form-input"
+          />
+        </Form.File>
+        {/* <Form.Group>
           <label>Images</label>
           <input
             type="file"
             id="exampleFormControlFile1"
-            label="Example file input"
             name="image"
-            value={selectedFile}
+            value={photo}
             onChange={handleImageUpload}
             className="form-input"
-          />
-          {/* <Form.File
+          /> */}
+        {/* <Form.File
             id="exampleFormControlFile1"
             label="Example file input"
             name="image"
@@ -125,7 +167,7 @@ const NewProduct = (props) => {
             onChange={handleImageUpload}
             className="form-input"
           /> */}
-        </Form.Group>
+        {/* </Form.Group> */}
 
         <Button variant="primary" type="submit">
           Submit

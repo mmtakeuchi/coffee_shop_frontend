@@ -1,8 +1,7 @@
 import { UPLOAD_IMAGE, RECEIVE_IMAGE_ERRORS } from "../actions/imageActions";
-import { RECEIVE_SESSION_ERRORS } from "../actions/sessionActions";
 
 const initialState = {
-  image: [],
+  image: null,
   errors: [],
 };
 
@@ -14,11 +13,9 @@ export default function (state = initialState, action) {
         ...state,
         image: action.image,
       };
-    case RECEIVE_IMAGE_ERRORS:
-      return {
-        errors: action.errors,
-      };
     default:
-      return state;
+      return {
+        state,
+      };
   }
 }
